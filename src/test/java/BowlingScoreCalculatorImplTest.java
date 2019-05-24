@@ -22,19 +22,30 @@ public class BowlingScoreCalculatorImplTest {
 
     @Test
     void canScoreZeroPoints() {
-        for (int i = 0; i < 20; i++) {
-            bowlingCalculator.roll(0);
-        }
+        roll(20,0);
         assertThat(bowlingCalculator.score()).isEqualTo(0);
 
     }
 
     @Test
     void canScoreGameOfOnes() {
-        for (int i = 0; i < 20; i++) {
-            bowlingCalculator.roll(1);
-        }
+        roll(20, 1);
         assertThat(bowlingCalculator.score()).isEqualTo(1);
+    }
+
+    @Test
+    void canScoreSpareFollowedByFive() {
+        bowlingCalculator.roll(5);
+        bowlingCalculator.roll(5);
+        bowlingCalculator.roll(5);
+        roll(17,0);
+        assertThat(bowlingCalculator.score()).isEqualTo(15);
+    }
+
+    private void roll(int times, int pins){
+        for (int i = 0 ; i < times; i++){
+            bowlingCalculator.roll(pins);
+        }
     }
 
     private void roll(int...rolls){
