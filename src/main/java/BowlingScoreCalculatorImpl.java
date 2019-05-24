@@ -11,7 +11,7 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
         int score = 0;
         int index = 0;
         for (int frame = 0; frame < 10; frame++){
-           if (rolls[index] + rolls[index + 1] == 10){
+           if (isSpare(index)){
                score += 10 + rolls[index + 2];
                index += 2;
            }
@@ -22,5 +22,9 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
         }
 
         return score;
+    }
+
+    private boolean isSpare(int index) {
+      return rolls[index] + rolls[index + 1] == 10;
     }
 }
