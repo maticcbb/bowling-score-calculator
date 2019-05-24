@@ -3,12 +3,16 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
     private int roll = 0;
     private int round = 1;
     private int[] rolls = new int[21];
-    private int indexCounter = 0 ;
+    private int indexCounter = 0;
 
+    @Override
     public void roll(int pins) {
-        rolls[roll++] = pins;
+        if (pins >= 0) {
+            rolls[roll++] = pins;
+        }
     }
 
+    @Override
     public int score() {
         int score = 0;
         int index = 0;
@@ -37,19 +41,13 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
                 i++;
                 round++;
             }
-            indexCounter = i ;
+            indexCounter = i; //get index before 10 round
         }
         return round;
     }
 
-    private boolean isStrike(int index) {
-        return rolls[index] == 10;
-    }
 
-    private boolean isSpare(int index) {
-        return rolls[index] + rolls[index + 1] == 10;
-    }
-
+    @Override
     public boolean isFinished() {
 
         if (round() == 10) {
@@ -61,8 +59,15 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
                 return lastRoundFirstRoll + 2 == roll;
             }
         }
-
         return false;
-
     }
+
+    private boolean isStrike(int index) {
+        return rolls[index] == 10;
+    }
+
+    private boolean isSpare(int index) {
+        return rolls[index] + rolls[index + 1] == 10;
+    }
+
 }
