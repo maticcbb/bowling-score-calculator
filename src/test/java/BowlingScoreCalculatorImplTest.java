@@ -43,6 +43,12 @@ public class BowlingScoreCalculatorImplTest {
         assertThat(bowlingCalculator.score()).isEqualTo(22);
     }
 
+    @Test
+    void canScoreAllStrikes() {
+        roll(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+        assertThat(bowlingCalculator.score()).isEqualTo(300);
+    }
+
     public void roll(int...rolls){
         for (int pins : rolls) {
            bowlingCalculator.roll(pins);
