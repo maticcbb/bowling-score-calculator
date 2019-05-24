@@ -21,7 +21,7 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canScoreZeroPoints() {
         // When
-        roll( 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
+        roll(0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
 
         // Then
         assertThat(bowlingCalculator.score()).isEqualTo(0);
@@ -41,7 +41,6 @@ public class BowlingScoreCalculatorImplTest {
         // When
         roll(5,5, 5,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
 
-
         // Then
         assertThat(bowlingCalculator.score()).isEqualTo(20);
     }
@@ -49,7 +48,7 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canScoreStrikeFollowedByThree() {
         // When
-        roll(10, 3,3, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
+        roll(10,3, 3,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
 
         // Then
         assertThat(bowlingCalculator.score()).isEqualTo(22);
@@ -58,7 +57,7 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canScoreAllStrikes() {
         // When
-        roll(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+        roll(10,10, 10,10, 10,10, 10,10, 10,10, 10,10);
 
         // Then
         assertThat(bowlingCalculator.score()).isEqualTo(300);
@@ -67,7 +66,7 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canCalculateRounds() {
         // When
-        roll(10, 3,3, 0,0, 0,0, 0,0, 10, 0,0, 3,2, 10, 0,0);
+        roll(10,3, 3,0, 0,0, 0,0, 0,10, 0,0, 3,2, 10,0, 0);
 
         // Then
         assertThat(bowlingCalculator.round()).isEqualTo(10);
@@ -76,26 +75,55 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canCalculateActualRound() {
         // When
-        roll(10, 3,3, 10, 0,0, 3,2, 10, 0,0);
+        roll(10,3, 3,10, 0,0, 3,2, 10,0, 0);
 
         // Then
         assertThat(bowlingCalculator.round()).isEqualTo(8);
     }
 
     @Test
-    public void shouldReturnTrue()  {
+    public void shouldReturnTrueWhenGameIsFinished() {
         // When
-        roll(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
-
+        roll(10,10, 10,10, 10,10, 10,10, 10,10, 10,10);
 
         // Then
         assertThat(bowlingCalculator.isFinished()).isEqualTo(true);
 
     }
 
-    public void roll(int...rolls){
+    @Test
+    void shouldReturnFalseWhenGameIsNotFinished() {
+        //When
+        roll(1,2, 5,6, 3,2, 7,3, 2,4 );
+
+        // Then
+        assertThat(bowlingCalculator.isFinished()).isEqualTo(false);
+    }
+
+    @Test
+    void shouldReturnTotalScoreAndThatGameIsFinished() {
+        //When
+        roll(10, 5,5, 10, 3,2, 5,3, 10, 10, 8,1, 3,5, 10,10,9);
+
+        //Then
+        assertThat(bowlingCalculator.score()).isEqualTo(161);
+        assertThat(bowlingCalculator.isFinished()).isEqualTo(true);
+    }
+
+    @Test
+    void shouldReturnActualScoreAndRoundAndThatGameIsNotFinished() {
+        //When
+        roll(0,0, 5,5, 10, 3,2, 5,3, 8,1, 10, 8,1);
+
+        //Then
+        assertThat(bowlingCalculator.score()).isEqualTo(85);
+        assertThat(bowlingCalculator.round()).isEqualTo(9);
+        assertThat(bowlingCalculator.isFinished()).isEqualTo(false);
+    }
+
+    public void roll(int... rolls) {
         for (int pins : rolls) {
-           bowlingCalculator.roll(pins);
+            bowlingCalculator.roll(pins);
         }
     }
 }
