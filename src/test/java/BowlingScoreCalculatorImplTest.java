@@ -36,4 +36,10 @@ public class BowlingScoreCalculatorImplTest {
         }
         assertThat(bowlingCalculator.score()).isEqualTo(1);
     }
+
+    private void roll(int...rolls){
+        for (int pins : rolls) {
+            roll(pins);
+        }
+    }
 }
