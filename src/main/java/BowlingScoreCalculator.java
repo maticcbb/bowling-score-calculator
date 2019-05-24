@@ -5,6 +5,6 @@ public interface BowlingScoreCalculator {
    int score();
 
    int round();
-//
-//    boolean isFinished();
+
+   boolean isFinished();
 }
