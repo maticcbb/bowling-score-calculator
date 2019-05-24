@@ -49,6 +49,18 @@ public class BowlingScoreCalculatorImplTest {
         assertThat(bowlingCalculator.score()).isEqualTo(300);
     }
 
+    @Test
+    void canCalculateRounds() {
+        roll(10, 3,3, 0,0, 0,0, 0,0, 10, 0,0, 3,2, 10, 0,0);
+        assertThat(bowlingCalculator.round()).isEqualTo(10);
+    }
+
+    @Test
+    void canCalculateActualRound() {
+        roll(10, 3,3, 10, 0,0, 3,2, 10, 0,0);
+        assertThat(bowlingCalculator.round()).isEqualTo(8);
+    }
+
     public void roll(int...rolls){
         for (int pins : rolls) {
            bowlingCalculator.roll(pins);
