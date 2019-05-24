@@ -4,7 +4,7 @@ public interface BowlingScoreCalculator {
 
    int score();
 
-//    int round();
+   int round();
 //
 //    boolean isFinished();
 }

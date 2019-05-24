@@ -1,6 +1,7 @@
 public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
 
     private int roll = 0;
+    private int round = 1;
     private int[] rolls = new int[21];
 
     public void roll(int pins) {
@@ -24,6 +25,19 @@ public class BowlingScoreCalculatorImpl implements BowlingScoreCalculator {
         }
 
         return score;
+    }
+
+    @Override
+    public int round() {
+        for (int i = 0; i < roll && round < 10; i++) {
+            if (rolls[i] == 10) {
+                round++;
+            } else {
+                i++;
+                round++;
+            }
+        }
+        return round;
     }
 
     private boolean isStrike(int index) {
