@@ -28,19 +28,24 @@ public class BowlingScoreCalculatorImplTest {
     @Test
     void canScoreGameOfOnes() {
         roll(1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1);
-        assertThat(bowlingCalculator.score()).isEqualTo(1);
+        assertThat(bowlingCalculator.score()).isEqualTo(20);
     }
 
     @Test
     void canScoreSpareFollowedByFive() {
         roll(5,5, 5,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
-        assertThat(bowlingCalculator.score()).isEqualTo(15);
+        assertThat(bowlingCalculator.score()).isEqualTo(20);
     }
 
+    @Test
+    void canScoreStrikeFollowedByThree() {
+        roll(10, 3,3, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
+        assertThat(bowlingCalculator.score()).isEqualTo(22);
+    }
 
-    private void roll(int...rolls){
+    public void roll(int...rolls){
         for (int pins : rolls) {
-            roll(pins);
+           bowlingCalculator.roll(pins);
         }
     }
 }
